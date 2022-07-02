@@ -1,0 +1,26 @@
+#
+# Copyright (c) 2021 - Present. Blend Labs, Inc. All rights reserved
+# Blend Confidential - Restricted
+#
+---
+name: InfoSec Copyright
+
+on:
+  pull_request: {}
+
+jobs:
+  copyright-check:
+    runs-on:
+    - self-hosted
+    - sandbox
+
+    steps:
+    - name: Instruction to add license
+      run: echo "Follow instruction here ---> https://go.blend.com/copyright-install to add license."
+
+    - name: Checkout repo
+      uses: actions/checkout@v2
+
+    - name: Run `actions/copyright-check`
+      id: copyright
+      uses: actions/copyright-check@main
