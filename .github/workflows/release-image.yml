@@ -1,0 +1,65 @@
+---
+name: Release Image
+
+on:
+  push:
+    branches:    
+    - master
+  workflow_dispatch:
+    inputs:
+      git-ref:
+        description: The target `git` branch, `git` tag or `git` SHA to be released.
+        required: true
+
+jobs:
+  release-image:
+    name: Release Image
+    runs-on:
+    - self-hosted
+    - tools
+
+    steps:
+    - name: Check out draino
+      uses: actions/checkout@v3
+      with:
+        ref: ${{ github.event.inputs.git-ref || 'master' }}
+        fetch-depth: 1
+    
+    - name: Compute image tag from Git SHA
+      id: get-tag
+      run: |
+        tag=$(echo ${{ github.sha }} | cut -c -7)
+        echo "::set-output name=tag::$tag"
+
+    - name: Configure AWS credentials for ECR
+      uses: actions/configure-aws-credentials@v1
+      with:
+        role-to-assume: arn:aws:iam::273929460374:role/github-actions-tools-ecr
+        role-duration-seconds: 3600
+        aws-region: us-east-1
+
+    - name: Log in to Amazon ECR
+      id: login-ecr
+      uses: actions/amazon-ecr-login@v1
+      with:
+        registries: "027075728603"
+
+    - name: Build and push docker image
+      uses: actions/build-docker-image@main
+      with:
+        docker-file-path: Dockerfile
+        repository: draino/draino
+        push-to-ecr: true
+        additional-tags: ${{ steps.get-tag.outputs.tag }}
+        aws-accounts: |
+          blendregistry
+
+    - name: Slack notify the user for GitHub Action job failure.
+      if: ${{ failure() }}
+      uses: actions/slack@main
+      with:
+        api-key: ${{ secrets.SLACK_ACTION_API_KEY }}
+        channel: '@${{ github.actor }}'
+        icon-emoji: ':hammer_and_wrench:'
+        attachment-text: 'GitHub Action job `${{ github.job }}` failed: https://git.blendlabs.com/${{ github.repository }}/actions/runs/${{ github.run_id }}'
+        attachment-color: danger
