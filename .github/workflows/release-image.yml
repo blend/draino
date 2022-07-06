@@ -31,24 +31,11 @@ jobs:
         tag=$(echo ${{ github.sha }} | cut -c -7)
         echo "::set-output name=tag::$tag"
 
-    - name: Configure AWS credentials for ECR
-      uses: actions/configure-aws-credentials@v1
-      with:
-        role-to-assume: arn:aws:iam::273929460374:role/github-actions-tools-ecr
-        role-duration-seconds: 3600
-        aws-region: us-east-1
-
-    - name: Log in to Amazon ECR
-      id: login-ecr
-      uses: actions/amazon-ecr-login@v1
-      with:
-        registries: "027075728603"
-
     - name: Build and push docker image
       uses: actions/build-docker-image@main
       with:
         docker-file-path: Dockerfile
-        repository: draino/draino
+        repository: draino
         push-to-ecr: true
         additional-tags: ${{ steps.get-tag.outputs.tag }}
         aws-accounts: |
