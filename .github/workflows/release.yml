@@ -58,8 +58,10 @@ jobs:
       env:
         CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
         CR_SKIP_EXISTING: "true"
+        CR_GIT_BASE_URL: https://api.git.blendlabs.com
       with:
         charts_dir: helm
+        charts_repo_url: https://git.blendlabs.com/pages/blend/draino/
 
     - name: Slack notify the user for GitHub Action job failure.
       if: ${{ failure() }}
