@@ -23,12 +23,12 @@ jobs:
       uses: actions/checkout@v3
       with:
         ref: ${{ github.event.inputs.git-ref || 'master' }}
-        fetch-depth: 1
-    
+        fetch-depth: 0
+
     - name: Compute image tag from Git SHA
       id: get-tag
       run: |
-        tag=$(echo ${{ github.sha }} | cut -c -7)
+        tag=$(git log -1 HEAD --format="%H")
         echo "::set-output name=tag::$tag"
 
     - name: Build and push docker image
@@ -36,10 +36,15 @@ jobs:
       with:
         docker-file-path: Dockerfile
         repository: draino
+        github-sha: ${{ steps.get-tag.outputs.tag }}
         push-to-ecr: true
-        additional-tags: ${{ steps.get-tag.outputs.tag }}
         aws-accounts: |
           blendregistry
+
+    - name: Configure Git
+      run: |
+        git config user.name "$GITHUB_ACTOR"
+        git config user.email "$GITHUB_ACTOR@users.noreply.git.blendlabs.com"
 
     - name: Install Helm
       uses: actions/setup-helm@main
