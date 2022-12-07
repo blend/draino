@@ -42,12 +42,12 @@ jobs:
           blendregistry
 
     - name: Install Helm
-      uses: azure/setup-helm@v1
+      uses: actions/setup-helm@main
       with:
         version: v3.4.0
     
     - name: Run chart-releaser
-      uses: helm/chart-releaser-action@v1.2.1
+      uses: actions/chart-releaser-action@main
       env:
         CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
         CR_SKIP_EXISTING: "true"
