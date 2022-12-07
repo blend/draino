@@ -58,7 +58,7 @@ jobs:
       env:
         CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
         CR_SKIP_EXISTING: "true"
-        CR_GIT_BASE_URL: https://git.blendlabs.com/api
+        CR_GIT_BASE_URL: https://git.blendlabs.com/api/v3
       with:
         charts_dir: helm
         charts_repo_url: https://git.blendlabs.com/pages/blend/draino/
