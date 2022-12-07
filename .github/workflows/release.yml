@@ -1,5 +1,5 @@
 ---
-name: Release Image
+name: Release
 
 on:
   push:
@@ -12,8 +12,8 @@ on:
         required: true
 
 jobs:
-  release-image:
-    name: Release Image
+  release:
+    name: Release
     runs-on:
     - self-hosted
     - tools
@@ -40,6 +40,19 @@ jobs:
         additional-tags: ${{ steps.get-tag.outputs.tag }}
         aws-accounts: |
           blendregistry
+
+    - name: Install Helm
+      uses: azure/setup-helm@v1
+      with:
+        version: v3.4.0
+    
+    - name: Run chart-releaser
+      uses: helm/chart-releaser-action@v1.2.1
+      env:
+        CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+        CR_SKIP_EXISTING: "true"
+      with:
+        charts_dir: helm
 
     - name: Slack notify the user for GitHub Action job failure.
       if: ${{ failure() }}
