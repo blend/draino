@@ -17,8 +17,6 @@ jobs:
     runs-on:
     - self-hosted
     - tools
-    permissions:
-      contents: write
 
     steps:
     - name: Check out draino
@@ -56,7 +54,7 @@ jobs:
     - name: Run chart-releaser
       uses: actions/chart-releaser-action@main
       env:
-        CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+        CR_TOKEN: "${{ secrets.GHE_TOKEN }}"
         CR_SKIP_EXISTING: "true"
         CR_GIT_BASE_URL: https://git.blendlabs.com/api/v3
         CR_GIT_UPLOAD_URL: https://git.blendlabs.com/api/v3/upload
