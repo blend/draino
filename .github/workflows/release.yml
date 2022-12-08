@@ -57,7 +57,7 @@ jobs:
         CR_TOKEN: "${{ secrets.GHE_TOKEN }}"
         CR_SKIP_EXISTING: "true"
         CR_GIT_BASE_URL: https://git.blendlabs.com/api/v3
-        CR_GIT_UPLOAD_URL: https://git.blendlabs.com/api/v3/upload
+        CR_GIT_UPLOAD_URL: https://git.blendlabs.com/api/uploads
       with:
         charts_dir: helm
         charts_repo_url: https://git.blendlabs.com/pages/blend/draino/
