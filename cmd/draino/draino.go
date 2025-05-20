@@ -214,7 +214,7 @@ func main() {
 	kingpin.FatalIfError(err, "cannot get hostname")
 
 	lock, err := resourcelock.New(
-		resourcelock.EndpointsResourceLock,
+		resourcelock.LeasesResourceLock,
 		*namespace,
 		*leaderElectionTokenName,
 		cs.CoreV1(),
