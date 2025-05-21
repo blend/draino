@@ -2,6 +2,14 @@ apiVersion: v1
 entries:
   draino:
   - apiVersion: v1
+    created: "2025-05-21T00:25:47.042563555Z"
+    description: draino chart
+    digest: a42f6bb6b649f288bb96127b0edd0aba4aa959c02c04fb0093143c9c8939fcd1
+    name: draino
+    urls:
+    - https://github.com/blend/draino/releases/download/draino-0.3.0/draino-0.3.0.tgz
+    version: 0.3.0
+  - apiVersion: v1
     created: "2023-01-06T01:04:46.133362221Z"
     description: draino chart
     digest: 45c6fe7c5f356cebd1798ae5d1e4fddcab22c4bb20696e9f58c4d63fe993a5ef
@@ -17,4 +25,4 @@ entries:
     urls:
     - https://github.com/blend/draino/releases/download/draino-0.1.0/draino-0.1.0.tgz
     version: 0.1.0
-generated: "2023-01-06T01:04:46.133372321Z"
+generated: "2025-05-21T00:25:47.042579344Z"
