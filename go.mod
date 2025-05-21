@@ -18,7 +18,7 @@ require (
 	gopkg.in/alecthomas/kingpin.v2 v2.2.6
 	k8s.io/api v0.31.8
 	k8s.io/apimachinery v0.31.8
-	k8s.io/client-go v8.0.0+incompatible
+	k8s.io/client-go v0.31.8
 	k8s.io/klog v0.3.1
 )
 
